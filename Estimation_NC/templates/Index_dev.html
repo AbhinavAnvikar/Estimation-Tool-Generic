@@ -1,0 +1,97 @@
+<html>
+   <header>
+      <title>Estimation Tool</title>
+       <h3><u>Estimation for developers</u></h3>
+   </header>
+   <body>
+   {% block content %}
+   <form  action="/index_dev" method="post" >
+      {% csrf_token %}
+      <table  bgcolor="#cdd0d6" frame="box">
+         <tr>
+             <td align="left" valign="center"  style="border-right: 5px solid #0f0f0f" width="350"><h4><u>Estimation Form</u></h4>
+                 <label><b>Name</b></label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;
+                 <input type="text" id="req_name" name="req_name" placeholder="Requirement Summary"><br><br>
+                <label><b>Complexity 1</b></label>&nbsp;&nbsp;
+                <select id="complex1" name="complex1">
+                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="Simple">Simple</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Complex">Complex</option>
+               </select>
+            <br><br><label><b>Complexity 2</b></label>&nbsp;&nbsp;
+                <select id="complex2" name="complex2">
+                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+               </select>
+                <br><br>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;
+                 <textarea id="comments_txt" name="comments_txt" placeholder="Your comments here (optional)" rows="5" cols="30"></textarea>
+                 <br><br>
+               <!-- <input type="submit" value="Calculate LOE" align="center"/> -->
+                 <button name="btn" value="Reset" formmethod="get">Clear All</button>
+                 <button name="btn" value="Calculate LOE"> Calculate LOE</button>
+            </td>
+             <td rowspan="2" align="center"  style="border-right: 5px solid #0f0f0f">
+               <h4>Complexity Selection</h4>
+               <img src="/media/criteria.JPG" style="width:350px;height:200px;">
+            </td>
+             <td rowspan="2" align="center">
+               <h4>Formula Used</h4>
+               <img src="/media/math.JPG" style="width:350px;height:200px;">
+            </td>
+
+         </tr>
+      </table>
+      {% if data == '-1' %}
+      {% else %}
+       <p>
+           <table frame="border">
+                <tr>
+                    <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
+                </tr>
+               <tr bgcolor="#ccd4e2">
+                   <td>
+                       # Requirement
+                   </td>
+                   <td>
+                       Complexity Level 1
+                   </td>
+                   <td>
+                       Complexity Level 2
+                   </td>
+                   <td>
+                       Technical LOE (in MDs)
+                   </td>
+                   <td>
+                       Technical LOE (With Unit Test)
+                   </td>
+                   <td>
+                       Comments
+                   </td>
+               </tr>
+            {% for item in rows %}
+                <tr>
+                    {% if item.2 == 'Total' %}
+                    {% for model in item %}
+                      <td align="left" style="border-top: 2px solid #0f0f0f" > <b>  {{model}}</b> </td>
+                    {% endfor %}
+                    {% else %}
+                    {% for model in item %}
+                      <td align="left" style="width:200px">   {{model}} </td>
+                    {% endfor %}
+                    {% endif %}
+                </tr>
+             {% endfor %}
+            </table>
+            <a href="/media/Estimation_List.xlsx" download>Click here to Download</a>
+       </p>
+    </form>
+    {% endif %}
+   {% endblock %}
+   </body>
+</html>
