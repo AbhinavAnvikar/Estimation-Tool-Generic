@@ -9,7 +9,8 @@ def Home_Page(request):
     return render(request, "home.html", {})
 
 def Index_tl_page(request):
-    return render(request, "index.html", {})
+    context = {'data':'-1'}
+    return render(request, "index.html",context)
 
 def Index_dev_Page(request):
     if request.method =='POST':

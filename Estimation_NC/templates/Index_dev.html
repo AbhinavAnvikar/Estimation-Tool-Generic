@@ -1,13 +1,31 @@
 <html>
    <header>
       <title>Estimation Tool</title>
-       <h3><u>Estimation for developers</u></h3>
    </header>
+    <h2>Estimation for Developers</h2>
+   <style>
+       body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  background-color: #ecf0f1;
+  color: #34495e;
+  font-family: Trebuchet, Arial, sans-serif;
+  text-align: center;
+}
+   </style>
    <body>
    {% block content %}
    <form  action="/index_dev" method="post" >
       {% csrf_token %}
-      <table  bgcolor="#cdd0d6" frame="box">
+      <table  bgcolor="#cdd0d6" frame="box" style="position: relative;">
          <tr>
              <td align="left" valign="center"  style="border-right: 5px solid #0f0f0f" width="350"><h4><u>Estimation Form</u></h4>
                  <label><b>Name</b></label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;

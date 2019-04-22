@@ -1,10 +1,180 @@
 <html>
    <header>
       <title>Estimation Tool</title>
-       <h1>:(</h1>
+       <h2>Estimation for Solution Archietects</h2>
    </header>
+    <style type="text/css">
+     body {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+          background-color: #ecf0f1;
+          color: #34495e;
+          font-family: Trebuchet, Arial, sans-serif;
+          text-align: center;
+        }
+    .form-style-9{
+        max-width: 350px;
+        background: #FAFAFA;
+        padding: 30px;
+        margin: 50px auto;
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+        border-radius: 10px;
+        border: 6px solid #305A72;
+    }
+    .form-style-9 ul{
+        padding:0;
+        margin:0;
+        list-style:none;
+    }
+    .form-style-9 ul li{
+        display: block;
+        margin-bottom: 15px;
+        min-height: 35px;
+    }
+    .form-style-9 ul li  .field-style{
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        padding: 8px;
+        outline: none;
+        border: 1px solid #B0CFE0;
+        -webkit-transition: all 0.30s ease-in-out;
+        -moz-transition: all 0.30s ease-in-out;
+        -ms-transition: all 0.30s ease-in-out;
+        -o-transition: all 0.30s ease-in-out;
+
+    }.form-style-9 ul li  .field-style:focus{
+        box-shadow: 0 0 5px #B0CFE0;
+        border:1px solid #B0CFE0;
+    }
+    .form-style-9 ul li .field-split{
+        width: 49%;
+    }
+    .form-style-9 ul li .field-full{
+        width: 70%;
+    }
+    .form-style-9 ul li input.align-left{
+        float:left;
+    }
+    .form-style-9 ul li input.align-right{
+        float:right;
+    }
+    .form-style-9 ul li textarea{
+        width: 70%;
+        height: 100px;
+    }
+    .form-style-9 ul li select{
+        width: 70%;
+    }
+    .form-style-9 ul li input[type="button"],
+    .form-style-9 ul li input[type="submit"] {
+        -moz-box-shadow: inset 0px 1px 0px 0px #3985B1;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #3985B1;
+        box-shadow: inset 0px 1px 0px 0px #3985B1;
+        background-color: #216288;
+        border: 1px solid #17445E;
+        display: inline-block;
+        cursor: pointer;
+        color: #FFFFFF;
+        padding: 8px 18px;
+        text-decoration: none;
+        font: 12px Arial, Helvetica, sans-serif;
+    }
+    .form-style-9 ul li input[type="button"]:hover,
+    .form-style-9 ul li input[type="submit"]:hover {
+        background: linear-gradient(to bottom, #2D77A2 5%, #337DA8 100%);
+        background-color: #28739E;
+    }
+    </style>
    <body>
    {% block content %}
+        <form class="form-style-9" method="post">
+            <h3>Estimation Form</h3>
+            <ul>
+            <li>
+                <input type="text" name="num_tab" class="field-style field-full align-center" placeholder="Number of tables" />
+                <!--
+                <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
+                -->
+            </li>
+            <li>
+                <input type="text" name="num_tras" class="field-style field-full align-center" placeholder="Average Transformations" />
+                <!--
+                <input type="url" name="field4" class="field-style field-split align-right" placeholder="Website" />
+                -->
+            </li>
+            <li>
+            <input type="text" name="num_val" class="field-style field-full align-none" placeholder="Average Validations" />
+            </li>
+                <li>
+            <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 70%; padding: 5px;">
+                  <option value="" selected disabled hidden>Choose Complexity</option>
+                  <option value="Simple">Simple</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Complex">Complex</option>
+            </select>
+                </li>
+            <li>
+            <textarea name="field5" class="field-style" placeholder="Your Comments"></textarea>
+            </li>
+            <li>
+            <input type="submit" value="Calculate LOE" />
+            </li>
+            </ul>
+        </form>
+        {% if data == '-1' %}
+            {% else %}
+           <table frame="border">
+                <tr>
+                    <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
+                </tr>
+               <tr bgcolor="#ccd4e2">
+                   <td>
+                       # Requirement
+                   </td>
+                   <td>
+                       Complexity Level 1
+                   </td>
+                   <td>
+                       Complexity Level 2
+                   </td>
+                   <td>
+                       Technical LOE (in MDs)
+                   </td>
+                   <td>
+                       Technical LOE (With Unit Test)
+                   </td>
+                   <td>
+                       Comments
+                   </td>
+               </tr>
+            {% for item in rows %}
+                <tr>
+                    {% if item.2 == 'Total' %}
+                    {% for model in item %}
+                      <td align="left" style="border-top: 2px solid #0f0f0f" > <b>  {{model}}</b> </td>
+                    {% endfor %}
+                    {% else %}
+                    {% for model in item %}
+                      <td align="left" style="width:200px">   {{model}} </td>
+                    {% endfor %}
+                    {% endif %}
+                </tr>
+             {% endfor %}
+            </table>
+            <a href="/media/Estimation_List.xlsx" download>Click here to Download</a>
+       </p>
+        {% endif %}
+
+
    <!--
    <form  action="." method="post" >
       {% csrf_token %}
@@ -13,7 +183,6 @@
              <td align="left" valign="center"  style="border-right: 5px solid #0f0f0f" width="350"><h4><u>Estimation Form</u></h4>
                  <label><b>Name</b></label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;
                  <input type="text" id="req_name" name="req_name" placeholder="Requirement Summary"><br><br>
-                <label><b>Complexity 1</b></label>&nbsp;&nbsp;
                 <select id="complex1" name="complex1">
                   <option value="" selected disabled hidden>Choose here</option>
                   <option value="Simple">Simple</option>
@@ -95,6 +264,6 @@
     {% endif %}
    {% endblock %}
    -->
-    <h3> Page is under development</h3>
    </body>
+    <footer>&copy; Netcracker Corporation</footer>
 </html>
