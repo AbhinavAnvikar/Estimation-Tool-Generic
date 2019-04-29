@@ -1,7 +1,7 @@
 <html>
    <header>
       <title>Estimation Tool</title>
-       <h2 style="font:Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;Low Level Estimations&nbsp;&nbsp;&nbsp;</h2>
+       <h2 style="font:Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;<b>High Level Estimations&nbsp;&nbsp;&nbsp;</b></h2>
    </header>
     <style type="text/css">
      body {
@@ -59,7 +59,7 @@
         width: 49%;
     }
     .form-style-9 ul li .field-full{
-        width: 80%;
+        width: 40%;
     }
     .form-style-9 ul li input.align-left{
         float:left;
@@ -72,7 +72,7 @@
         height: 100px;
     }
     .form-style-9 ul li select{
-        width: 80%;
+        width: 50%;
     }
     .form-style-9 ul li input[type="button"],
     .form-style-9 ul li input[type="submit"] {
@@ -86,7 +86,7 @@
         color: #FFFFFF;
         padding: 8px 18px;
         text-decoration: none;
-        font: 16px Arial, Helvetica, sans-serif;
+        font: 14px Arial, Helvetica, sans-serif;
     }
     .form-style-9 ul li input[type="button"]:hover,
     .form-style-9 ul li input[type="submit"]:hover {
@@ -98,33 +98,63 @@
    {% block content %}
         <form class="form-style-9" method="post"> {% csrf_token %}
             <h3>Estimation Form</h3>
+            <br>
             <ul>
-            <li>
-                <input type="number" name="num_tab" class="field-style field-full align-center" placeholder="Number of tables" />
-                <!--
-                <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
-                -->
-            </li>
-            <li>
+                <li>
+                    <label style="font: 15px Helvetica, sans-serif;">Req Name &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <input type="text" class="field-style field-full align-center" id="req_name" name="req_name" placeholder="Requirement Name" style="width: 50%; padding: 5px;"><br>
+
+                </li>
+                <li><label style="font: 15px Helvetica, sans-serif;">Complexity&nbsp;&nbsp;&nbsp;</label>
+                    <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 50%; padding: 5px;">
+                          <option value="" selected disabled hidden>Choose Complexity</option>
+                          <option value="Simple">Simple</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Complex">Complex</option>
+                    </select>
+                    <!--
+                    <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
+                    -->
+                </li>
+                <li><label style="font: 15px Helvetica, sans-serif;">Level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    &nbsp;&nbsp;&nbsp;<select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 50%; padding: 5px;">
+                          <option value="" selected disabled hidden>Choose Level</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                    </select>
+                    <!--
+                    <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
+                    -->
+                </li>
+                <li>
+                    <textarea name="field5" class="field-style" placeholder="Your Comments" style="font: 15px Helvetica, sans-serif;"></textarea>
+                </li>
+            <!--
+                <li>
                 <input type="number" name="num_tras" class="field-style field-full align-center" placeholder="Avg Num of Transform per Table" />
-                <!--
+
                 <input type="url" name="field4" class="field-style field-split align-right" placeholder="Website" />
-                -->
+                -- >
             </li>
             <li>
             <input type="number" name="num_val" class="field-style field-full align-none" placeholder="Avg Num of Validations per Table" />
             </li>
-                <li>
+            <li>
                 <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 80%; padding: 5px;">
                       <option value="" selected disabled hidden>Choose Complexity</option>
                       <option value="Simple">Simple</option>
                       <option value="Medium">Medium</option>
                       <option value="Complex">Complex</option>
                 </select>
-                </li>
+             </li>
             <li>
-            <textarea name="field5" class="field-style" placeholder="Your Comments" style="font: 15px Helvetica, sans-serif;"></textarea>
+            <textarea name="field5" class="field-style" placeholder="Your Comments"></textarea>
             </li>
+                -->
+                <br>
             <li>
             <input type="submit" value="Calculate LOE"  />
             </li>

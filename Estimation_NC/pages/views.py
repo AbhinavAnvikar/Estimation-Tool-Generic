@@ -12,6 +12,10 @@ def Index_tl_page(request):
     context = {'data':'-1'}
     return render(request, "index.html",context)
 
+def Index_d_page(request):
+    context = {'data':'-1'}
+    return render(request, "index_d.html",context)
+
 def Index_dev_Page(request):
     if request.method =='POST':
         #print(complex1, complex2)
