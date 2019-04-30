@@ -32,6 +32,32 @@ class Estimate_Engine:
         return tech_loe,final_tech_loe
 
     @staticmethod
+    def get_LOE_LL(com, tab, trans, valid):
+        # get the weights from estimation matrix based on the complexity
+
+        for rows in range(1, sheet.max_row + 1):
+            # print(sheet.cell(rows, 1).value)
+            if sheet.cell(rows, 1).value == com:
+                # print("reached here")
+                for headers in range(1, sheet.max_column + 1):
+                    if sheet.cell(1, headers).value == 'Weights':
+                        w_com = float(sheet.cell(rows, headers).value)
+                    elif sheet.cell(1, headers).value == 'Table':
+                        w_tab = float(sheet.cell(rows, headers).value)
+                    elif sheet.cell(1, headers).value == 'Trans':
+                        w_trans = float(sheet.cell(rows, headers).value)
+                    elif sheet.cell(1, headers).value == 'Valid':
+                        w_val = float(sheet.cell(rows, headers).value)
+                    elif sheet.cell(1, headers).value == 'UT':
+                        w_UT = float(sheet.cell(rows, headers).value)
+
+        # calculate the LOE based on the matrix
+
+        Sum_LOE = (((tab * w_tab) + ((trans * w_trans) + (valid * w_val))) * w_com)
+        Toatl_loe = (Sum_LOE * (1 + w_UT / 100))
+        return Sum_LOE, Toatl_loe
+
+    @staticmethod
     def download_to_excel(lst):
         print("point1")
         csv_list = [['Requirement', 'Complexity 1', 'Complexity 2', 'Tech_LOE', 'Tech_LOE_With_UT', 'Comments']]

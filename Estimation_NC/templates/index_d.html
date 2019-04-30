@@ -101,11 +101,11 @@
             <br>
             <ul>
                 <li>
-                    <label style="font: 15px Helvetica, sans-serif;">Req Name &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <label style="font: 15px Helvetica, sans-serif;"><b>R</b>eq Name &nbsp;&nbsp;&nbsp;</label>
                     <input type="text" class="field-style field-full align-center" id="req_name" name="req_name" placeholder="Requirement Name" style="width: 50%; padding: 5px;"><br>
 
                 </li>
-                <li><label style="font: 15px Helvetica, sans-serif;">Complexity&nbsp;&nbsp;&nbsp;</label>
+                <li><label style="font: 15px Helvetica, sans-serif;"><b>C</b>omplexity&nbsp;&nbsp;&nbsp;</label>
                     <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 50%; padding: 5px;">
                           <option value="" selected disabled hidden>Choose Complexity</option>
                           <option value="Simple">Simple</option>
@@ -116,7 +116,7 @@
                     <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
                     -->
                 </li>
-                <li><label style="font: 15px Helvetica, sans-serif;">Level&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <li><label style="font: 15px Helvetica, sans-serif;"><b>L</b>evel<span style="color: red;"> *</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     &nbsp;&nbsp;&nbsp;<select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 50%; padding: 5px;">
                           <option value="" selected disabled hidden>Choose Level</option>
                           <option value="1">1</option>
@@ -124,7 +124,7 @@
                           <option value="3">3</option>
                           <option value="4">4</option>
                           <option value="5">5</option>
-                    </select>
+                    </select><br><br>
                     <!--
                     <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
                     -->
@@ -154,16 +154,17 @@
             <textarea name="field5" class="field-style" placeholder="Your Comments"></textarea>
             </li>
                 -->
-                <br>
             <li>
-            <input type="submit" value="Calculate LOE"  />
+            <input type="submit" class="btn" formaction="/" value="Home"/> &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Calculate LOE"  />
             </li>
+                <span style="color:#f93636; font: 15px Helvetica; "> * Please select the complexity on scale of 1 to 5</span>
             </ul>
         </form>
         <p>
         {% if data == '-1' %}
             {% else %}
-           <table frame="border">
+            <br><br>
+           <table frame="border" style="position: relative; top: 50%; left: 17%;">
                 <tr>
                     <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
                 </tr>

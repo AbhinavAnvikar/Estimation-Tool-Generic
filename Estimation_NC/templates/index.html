@@ -86,7 +86,7 @@
         color: #FFFFFF;
         padding: 8px 18px;
         text-decoration: none;
-        font: 16px Arial, Helvetica, sans-serif;
+        font: 14px Arial, Helvetica, sans-serif;
     }
     .form-style-9 ul li input[type="button"]:hover,
     .form-style-9 ul li input[type="submit"]:hover {
@@ -122,17 +122,22 @@
                       <option value="Complex">Complex</option>
                 </select>
                 </li>
+                <li>
+                    <input type="checkbox" name="is_recon" style="width:15px;height:15px;">&nbsp;&nbsp;
+                    <label style="font: 15px Arial; color:#232930;"> Reconciliation Required</label>
+                </li>
             <li>
             <textarea name="field5" class="field-style" placeholder="Your Comments" style="font: 15px Helvetica, sans-serif;"></textarea>
             </li>
             <li>
-            <input type="submit" value="Calculate LOE"  />
+            <input type="submit" class="btn" formaction="/" value="Home"/>&nbsp;&nbsp;&nbsp;<input type="submit" value="Calculate LOE"  />
             </li>
             </ul>
         </form>
+        <p><br>
         {% if data == '-1' %}
             {% else %}
-           <table frame="border">
+           <table frame="border" style="position: relative; top: 0%; left: 17%;">
                 <tr>
                     <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
                 </tr>
