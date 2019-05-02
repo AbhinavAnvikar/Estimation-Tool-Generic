@@ -9,6 +9,14 @@ def Home_Page(request):
     return render(request, "home.html", {})
 
 def Index_tl_page(request):
+    if request.method == 'POST':
+        num_tab = request.POST.get('num_tab')
+        num_trans = request.POST.get('num_trans')
+        num_val = request.POST.get('num_val')
+        comp = request.POST.get('complex1')
+        is_rec = request.POST.get('is_recon')
+        comments =  request.POST.get('comments')
+        print(num_tab, num_trans, num_val,comp,is_rec,comments)
     context = {'data':'-1'}
     return render(request, "index.html",context)
 
