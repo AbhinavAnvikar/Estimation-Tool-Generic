@@ -36,7 +36,7 @@ def get_LOE_LL(com,tab,trans,valid):
 
 # loe,final_loe = get_LOE('Simple',1,1,1)
 # print(loe,final_loe)
-loe,final_loe = get_LOE('Complex',3,4,4)
+loe,final_loe = get_LOE_LL('Complex',3,4,4)
 print(loe,final_loe)
 
 #

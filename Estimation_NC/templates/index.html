@@ -130,26 +130,29 @@
             <textarea name="comments" class="field-style" placeholder="Your Comments" style="font: 15px Helvetica, sans-serif;"></textarea>
             </li>
             <li>
-            <input type="submit" class="btn" formaction="/" value="Home"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Calculate LOE"/>
+            <input type="submit" class="btn" formaction="/" value="Home"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Calculate LOE"/> &nbsp;<input type="submit" value="Reset" formmethod="get"/>
             </li>
             </ul>
         </form>
-        <p><br>
         {% if data == '-1' %}
+        <p><br>
             {% else %}
-           <table frame="border" style="position: relative; top: 0%; left: 17%;">
+           <table frame="border" style="position: relative; top: 0%; left: 0%; allign:center">
                 <tr>
-                    <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
+                    <td colspan="7" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
                 </tr>
                <tr bgcolor="#ccd4e2">
                    <td>
-                       # Requirement
+                       Number of Tables
                    </td>
                    <td>
-                       Complexity Level 1
+                       Complexity
                    </td>
                    <td>
-                       Complexity Level 2
+                       Avg Trans
+                   </td>
+                   <td>
+                       Avg Valid
                    </td>
                    <td>
                        Technical LOE (in MDs)
@@ -163,7 +166,7 @@
                </tr>
             {% for item in rows %}
                 <tr>
-                    {% if item.2 == 'Total' %}
+                    {% if item.3 == 'Total' %}
                     {% for model in item %}
                       <td align="left" style="border-top: 2px solid #0f0f0f" > <b>  {{model}}</b> </td>
                     {% endfor %}
@@ -175,11 +178,9 @@
                 </tr>
              {% endfor %}
             </table>
-            <a href="/media/Estimation_List.xlsx" download>Click here to Download</a>
+            <a href="/media/Estimation_List_Low_Level.xlsx" download>Click here to Download</a>
        </p>
         {% endif %}
-
-
    <!--
    <form  action="." method="post" >
       {% csrf_token %}

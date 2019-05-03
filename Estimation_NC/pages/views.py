@@ -10,6 +10,8 @@ def Home_Page(request):
 
 def Index_tl_page(request):
     if request.method == 'POST':
+        global rows
+        global i
         num_tab = request.POST.get('num_tab')
         num_trans = request.POST.get('num_trans')
         num_val = request.POST.get('num_val')
@@ -17,11 +19,82 @@ def Index_tl_page(request):
         is_rec = request.POST.get('is_recon')
         comments =  request.POST.get('comments')
         print(num_tab, num_trans, num_val,comp,is_rec,comments)
-    context = {'data':'-1'}
+        if comp:
+            if rows:
+                rows.pop(len(rows)-1)
+            sum_loe, total_loe = Estimate_Engine.get_loe_ll(comp, num_tab, num_trans, num_val)
+            print(sum_loe, total_loe)
+            if is_rec is not None:
+                sum_loe += (float(num_tab) * 2)
+                total_loe += (float(num_tab) * 2)
+            rows.append([num_tab,comp, num_trans, num_val, sum_loe, total_loe, comments])
+            data = '1'
+        elif not comp:
+            if not rows:
+                data = '-1'
+            else:
+                rows.pop(len(rows) - 1)
+                data = '1'
+                tot1, tot2 = Estimate_Engine.total_estimate_ll(rows)
+                rows.append(['', '', '', 'Total', tot1, tot2, ''])
+        # print(comments)
+        context = {'data': data, 'rows': rows}
+        print(rows)
+    elif request.method=='GET':
+        context = {'data': '-1'}
+        rows = []
+    else:
+        context = {'data': '-1'}
+    Estimate_Engine.download_to_excel_LL(rows)
     return render(request, "index.html",context)
 
 def Index_d_page(request):
-    context = {'data':'-1'}
+    if request.method =='POST':
+        #print(complex1, complex2)
+        global rows
+        global i
+
+        #get the input complexities
+        req = request.POST.get('req_name')
+        complex1 = request.POST.get('complex1')
+        complex2 = request.POST.get('complex2')
+        comments = request.POST.get('comments_txt')
+        #print(complex1, complex2)
+        print(req)
+        # Confition if no selection
+        if (complex1 and complex2):
+            i+=1
+
+            # First Run. No need to delete the total
+            if rows:
+                rows.pop(len(rows)-1)
+            tech_loe,final_tech_loe = Estimate_Engine.get_loe(complex1,complex2)
+            if not req:
+                rows.append([i,complex1, complex2, tech_loe, final_tech_loe,comments])
+            else:
+                rows.append([req, complex1, complex2, tech_loe, final_tech_loe, comments])
+            data = 1
+        elif (not complex1 or not complex2):
+            if not rows :
+                data = '-1'
+            else:
+                rows.pop(len(rows) - 1)
+                data = 1
+                tot1, tot2 = Estimate_Engine.total_estimate(rows)
+                rows.append(['', '', 'Total', tot1, tot2, ''])
+        # Last row for the Total LOE's
+        #print(comments)
+
+        context={'data':data, 'rows':rows}
+
+    elif request.method =='GET':
+        context = {'data': '-1'}
+        rows=[]
+        i=0
+    else:
+        context = {'data':'-1'}
+
+    Estimate_Engine.download_to_excel(rows)
     return render(request, "index_d.html",context)
 
 def Index_dev_Page(request):

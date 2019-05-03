@@ -14,6 +14,16 @@ class Estimate_Engine:
         return round(sum_loe,2),round(sum_loe_ut,2)
 
     @staticmethod
+    def total_estimate_ll(lst):
+        sum_loe = 0.00
+        sum_loe_ut = 0.00
+        for item in lst:
+            sum_loe += item[4]
+            sum_loe_ut += item[5]
+
+        return round(sum_loe, 2), round(sum_loe_ut, 2)
+
+    @staticmethod
     def get_loe(com1,com2):
         tech_loe = 0.0
         final_tech_loe=0.0
@@ -32,13 +42,15 @@ class Estimate_Engine:
         return tech_loe,final_tech_loe
 
     @staticmethod
-    def get_LOE_LL(com, tab, trans, valid):
+    def get_loe_ll(com, tab, trans, valid):
         # get the weights from estimation matrix based on the complexity
-
+        wb = xl.load_workbook(
+            'C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation.xlsx')
+        sheet = wb['Estimation_LL']
         for rows in range(1, sheet.max_row + 1):
             # print(sheet.cell(rows, 1).value)
             if sheet.cell(rows, 1).value == com:
-                # print("reached here")
+                print("reached here")
                 for headers in range(1, sheet.max_column + 1):
                     if sheet.cell(1, headers).value == 'Weights':
                         w_com = float(sheet.cell(rows, headers).value)
@@ -53,9 +65,9 @@ class Estimate_Engine:
 
         # calculate the LOE based on the matrix
 
-        Sum_LOE = (((tab * w_tab) + ((trans * w_trans) + (valid * w_val))) * w_com)
-        Toatl_loe = (Sum_LOE * (1 + w_UT / 100))
-        return Sum_LOE, Toatl_loe
+        Sum_LOE = (((float(tab) * w_tab) + ((float(trans) * w_trans) + (float(valid) * w_val))) * w_com)
+        Total_loe = (Sum_LOE * (1 + w_UT / 100))
+        return round(Sum_LOE,2), round(Total_loe,2)
 
     @staticmethod
     def download_to_excel(lst):
@@ -67,6 +79,20 @@ class Estimate_Engine:
         #str = str(datetime.datetime.now().time())
         #excel_name = "C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimate_Sheet_" + str
         writer = pd.ExcelWriter("C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation_List.xlsx")
+        df = pd.DataFrame(data=csv_list)
+        df.to_excel(writer, header=False, index=False, sheet_name="Estimation_Sheet")
+        writer.save()
+
+    def download_to_excel_LL(lst):
+        print("point1")
+        csv_list = [['Number of Tables', 'Complexity', 'Avg Trans', 'Avg Valid', 'Tech_LOE(in MDs)','Tech_LOE_With_UT','Comments']]
+        for i in range(0, len(lst)):
+            csv_list.append(lst[i])
+        # csv_list.append(rows)
+        # str = str(datetime.datetime.now().time())
+        # excel_name = "C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimate_Sheet_" + str
+        writer = pd.ExcelWriter(
+            "C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation_List_Low_Level.xlsx")
         df = pd.DataFrame(data=csv_list)
         df.to_excel(writer, header=False, index=False, sheet_name="Estimation_Sheet")
         writer.save()
