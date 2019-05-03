@@ -1,7 +1,7 @@
 <html>
    <header>
       <title>Estimation Tool</title>
-       <h2 style="font:Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;Low Level Estimations&nbsp;&nbsp;&nbsp;</h2>
+       <h2 style="font:Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;<b>High Level Estimations&nbsp;&nbsp;&nbsp;</b></h2>
    </header>
     <style type="text/css">
      body {
@@ -59,7 +59,7 @@
         width: 49%;
     }
     .form-style-9 ul li .field-full{
-        width: 80%;
+        width: 40%;
     }
     .form-style-9 ul li input.align-left{
         float:left;
@@ -72,7 +72,7 @@
         height: 100px;
     }
     .form-style-9 ul li select{
-        width: 80%;
+        width: 50%;
     }
     .form-style-9 ul li input[type="button"],
     .form-style-9 ul li input[type="submit"] {
@@ -98,61 +98,85 @@
    {% block content %}
         <form class="form-style-9" method="post"> {% csrf_token %}
             <h3>Estimation Form</h3>
+            <br>
             <ul>
-            <li>
-                <input type="number" name="num_tab" class="field-style field-full align-center" placeholder="Number of Tables" />
-                <!--
-                <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
-                -->
-            </li>
-            <li>
-                <input type="number" name="num_trans" class="field-style field-full align-center" placeholder="Avg Num of Transform per Table" />
-                <!--
+                <li>
+                    <label style="font: 15px Helvetica, sans-serif;"><b>R</b>eq Name &nbsp;&nbsp;&nbsp;</label>
+                    <input type="text" class="field-style field-full align-center" id="req_name" name="req_name" placeholder="Requirement Name" style="width: 50%; padding: 5px;"><br>
+
+                </li>
+                <li><label style="font: 15px Helvetica, sans-serif;"><b>C</b>omplexity&nbsp;&nbsp;&nbsp;</label>
+                    <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 50%; padding: 5px;">
+                          <option value="" selected disabled hidden>Choose Complexity</option>
+                          <option value="Simple">Simple</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Complex">Complex</option>
+                    </select>
+                    <!--
+                    <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
+                    -->
+                </li>
+                <li><label style="font: 15px Helvetica, sans-serif;"><b>L</b>evel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    &nbsp;&nbsp;&nbsp;<select id="complex2" name="complex2" class="field-style field-full align-center" style="width: 50%; padding: 5px;">
+                          <option value="" selected disabled hidden>Choose Level</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                    </select><br><br>
+                    <!--
+                    <input type="email" name="field2" class="field-style field-split align-right" placeholder="Email" />
+                    -->
+                    <span style="color:#f93636; font: 13px Helvetica; "> Note - Please select the complexity on scale of 1 to 5</span>
+                </li>
+                <li>
+                    <textarea name="comments_txt" class="field-style" placeholder="Your Comments" style="font: 15px Helvetica, sans-serif;"></textarea>
+                </li>
+            <!--
+                <li>
+                <input type="number" name="num_tras" class="field-style field-full align-center" placeholder="Avg Num of Transform per Table" />
+
                 <input type="url" name="field4" class="field-style field-split align-right" placeholder="Website" />
-                -->
+                -- >
             </li>
             <li>
             <input type="number" name="num_val" class="field-style field-full align-none" placeholder="Avg Num of Validations per Table" />
             </li>
-                <li>
+            <li>
                 <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 80%; padding: 5px;">
                       <option value="" selected disabled hidden>Choose Complexity</option>
                       <option value="Simple">Simple</option>
                       <option value="Medium">Medium</option>
                       <option value="Complex">Complex</option>
                 </select>
-                </li>
-                <li>
-                    <input type="checkbox" name="is_recon" style="width:15px;height:15px;">&nbsp;
-                    <label style="font: 15px Arial; color:#232930;"> Reconciliation Required</label>
-                </li>
+             </li>
             <li>
-            <textarea name="comments" class="field-style" placeholder="Your Comments" style="font: 15px Helvetica, sans-serif;"></textarea>
+            <textarea name="field5" class="field-style" placeholder="Your Comments"></textarea>
             </li>
+                -->
             <li>
-            <input type="submit" class="btn" formaction="/" value="Home"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Calculate LOE"/> &nbsp;<input type="submit" value="Reset" formmethod="get"/>
+            <input type="submit" class="btn" formaction="/" value="Home"/>&nbsp;&nbsp;<input type="submit" value="Calculate LOE"  />&nbsp;&nbsp;<input type="submit" value="Reset" formmethod="get"  />
             </li>
             </ul>
         </form>
+        <p>
         {% if data == '-1' %}
-        <p><br>
             {% else %}
-           <table frame="border" style="position: relative; top: 0%; left: 0%; allign:center">
+            <br><br>
+           <table frame="border" style="position: relative; top: 50%; left: 0%;">
                 <tr>
-                    <td colspan="7" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
+                    <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
                 </tr>
                <tr bgcolor="#ccd4e2">
                    <td>
-                       Number of Tables
+                       # Requirement
                    </td>
                    <td>
-                       Complexity
+                       Complexity Level 1
                    </td>
                    <td>
-                       Avg Trans
-                   </td>
-                   <td>
-                       Avg Valid
+                       Complexity Level 2
                    </td>
                    <td>
                        Technical LOE (in MDs)
@@ -166,7 +190,7 @@
                </tr>
             {% for item in rows %}
                 <tr>
-                    {% if item.3 == 'Total' %}
+                    {% if item.2 == 'Total' %}
                     {% for model in item %}
                       <td align="left" style="border-top: 2px solid #0f0f0f" > <b>  {{model}}</b> </td>
                     {% endfor %}
@@ -178,9 +202,10 @@
                 </tr>
              {% endfor %}
             </table>
-            <a href="/media/Estimation_List_Low_Level.xlsx" download>Click here to Download</a>
-       </p>
+            <a href="/media/Estimation_List.xlsx" download>Click here to Download </a>
         {% endif %}
+
+
    <!--
    <form  action="." method="post" >
       {% csrf_token %}
