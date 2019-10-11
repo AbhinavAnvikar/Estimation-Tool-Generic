@@ -3,6 +3,13 @@ import pandas as pd
 #import datetime
 
 class Estimate_Engine:
+
+    @staticmethod
+    def ifnull(var, val):
+        if var is None or var == '':
+            return val
+        return var
+
     @staticmethod
     def total_estimate(lst):
         sum_loe=0.00
@@ -43,6 +50,12 @@ class Estimate_Engine:
 
     @staticmethod
     def get_loe_ll(com, tab, trans, valid):
+
+        #Null check for trans and valid
+
+        valid = Estimate_Engine.ifnull(valid,0)
+        trans = Estimate_Engine.ifnull(trans,0)
+
         # get the weights from estimation matrix based on the complexity
         wb = xl.load_workbook(
             'C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation.xlsx')
@@ -64,7 +77,6 @@ class Estimate_Engine:
                         w_UT = float(sheet.cell(rows, headers).value)
 
         # calculate the LOE based on the matrix
-
         Sum_LOE = (((float(tab) * w_tab) + ((float(trans) * w_trans) + (float(valid) * w_val))) * w_com)
         Total_loe = (Sum_LOE * (1 + w_UT / 100))
         return round(Sum_LOE,2), round(Total_loe,2)
@@ -78,8 +90,8 @@ class Estimate_Engine:
         # csv_list.append(rows)
         #str = str(datetime.datetime.now().time())
         #excel_name = "C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimate_Sheet_" + str
-        writer = pd.ExcelWriter("C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation_List.xlsx")
-        df = pd.DataFrame(data=csv_list)
+        df = pd.DataFrame(data=csv_list)        writer = pd.ExcelWriter("C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation_List.xlsx")
+
         df.to_excel(writer, header=False, index=False, sheet_name="Estimation_Sheet")
         writer.save()
 

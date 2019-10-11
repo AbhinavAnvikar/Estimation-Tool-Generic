@@ -1,0 +1,253 @@
+<html>
+   <header>
+      <title>Estimation Tool</title>
+   </header>
+    <style type="text/css">
+     body {
+          position: relative;
+          top: 50%;
+          left: 50%;
+
+          -webkit-transform: translate(-50%, -50%);
+          -moz-transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          -o-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+          background-color: #ecf0f1;
+          color: #34495e;
+          font-family: Trebuchet, Arial, sans-serif;
+          text-align: center;
+        }
+    .form-style-9{
+        max-width: 350px;
+        background: #FAFAFA;
+        padding: 10px;
+        margin: 20px auto;
+        box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.35);
+        border-radius: 10px;
+        border: 6px solid #305A72;
+    }
+    .form-style-9 ul{
+        padding:0;
+        margin:0;
+        list-style:none;
+    }
+    .form-style-9 ul li{
+        display: block;
+        margin-bottom: 15px;
+        min-height: 35px;
+    }
+    .form-style-9 ul li  .field-style{
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        padding: 8px;
+        outline: none;
+        border: 1px solid #B0CFE0;
+        -webkit-transition: all 0.30s ease-in-out;
+        -moz-transition: all 0.30s ease-in-out;
+        -ms-transition: all 0.30s ease-in-out;
+        -o-transition: all 0.30s ease-in-out;
+
+    }.form-style-9 ul li  .field-style:focus{
+        box-shadow: 0 0 10px #B0CFE0;
+        border:1px solid #4f809b;
+    }
+    .form-style-9 ul li .field-split{
+        width: 49%;
+    }
+    .form-style-9 ul li .field-full{
+        width: 40%;
+    }
+    .form-style-9 ul li input.align-left{
+        float:left;
+    }
+    .form-style-9 ul li input.align-right{
+        float:right;
+    }
+    .form-style-9 ul li textarea{
+        width: 80%;
+        height: 100px;
+    }
+    .form-style-9 ul li select{
+        width: 50%;
+    }
+    .form-style-9 ul li input[type="button"],
+    .form-style-9 ul li input[type="submit"] {
+        -moz-box-shadow: inset 0px 1px 0px 0px #3985B1;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #3985B1;
+        box-shadow: inset 0px 1px 0px 0px #3985B1;
+        background-color: #216288;
+        border: 1px solid #17445E;
+        display: inline-block;
+        cursor: pointer;
+        color: #FFFFFF;
+        padding: 8px 18px;
+        text-decoration: none;
+        font: 14px Arial, Helvetica, sans-serif;
+    }
+    .form-style-9 ul li input[type="button"]:hover,
+    .form-style-9 ul li input[type="submit"]:hover {
+        background: linear-gradient(to bottom, #28739E 5%, #28739E 100%);
+        background-color: #28739E;
+    }
+    </style>
+   <body>
+   {% block content %}
+   {% if success == '1' %}
+        <h3> User {{ username }} created successfully, Please <a href="/">Click Here</a> to login </h3>
+   {% else %}
+   <h2 style="font:Arial, Helvetica, sans-serif">&nbsp;&nbsp;&nbsp;<b>Register New User&nbsp;</b></h2>
+        <form class="form-style-9" method="post"> {% csrf_token %}
+            <h3>Sign Up Form </h3>
+            <br>
+            <ul>
+                <li>
+                    {% if username == 'none' %}
+                    <input type="text" class="field-style field-full align-center" id="req_name" name="u_name" placeholder="Enter User Name" style="width: 50%; padding: 5px;">
+                    {% else %}
+                    <input type="text" class="field-style field-full align-center" id="req_name" name="u_name" value="{{username}}" style="width: 50%; padding: 5px;">
+                    {% endif %}
+                    {% if success == '3' %}
+                        <br><br> <font color="red" size="2">* {{err_msg}}</font>
+                    {% endif %}
+                    <br>
+                </li>
+                <li>
+                    <input type="password" class="field-style field-full align-center" id="password" name="password" placeholder="Enter your Password" style="width: 50%; padding: 5px;"><br>
+                </li>
+                <li>
+                    <input type="password" class="field-style field-full align-center" id="re_pass" name="re_pass" placeholder="Re-enter your Password" style="width: 50%; padding: 5px;"><br>
+                    {% if success == '2' %}
+                    <br> <font color="red" size="2">* {{err_msg}}</font>
+                {% endif %}
+                </li>
+                <li>
+                    {% if u_email == 'none' %}
+                    <input type="text" class="field-style field-full align-center" id="u_email" name="u_email" placeholder="Enter your Email" style="width: 50%; padding: 5px;"><br>
+                    {% else %}
+                    <input type="text" class="field-style field-full align-center" id="u_email" name="u_email" value="{{u_email}}" style="width: 50%; padding: 5px;"><br>
+                    {% endif %}
+                </li>
+
+            <!--
+                <li>
+                <input type="number" name="num_tras" class="field-style field-full align-center" placeholder="Avg Num of Transform per Table" />
+
+                <input type="url" name="field4" class="field-style field-split align-right" placeholder="Website" />
+                -- >
+            </li>
+            <li>
+            <input type="number" name="num_val" class="field-style field-full align-none" placeholder="Avg Num of Validations per Table" />
+            </li>
+            <li>
+                <select id="complex1" name="complex1" class="field-style field-full align-center" style="width: 80%; padding: 5px;">
+                      <option value="" selected disabled hidden>Choose Complexity</option>
+                      <option value="Simple">Simple</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Complex">Complex</option>
+                </select>
+             </li>
+            <li>
+            <textarea name="field5" class="field-style" placeholder="Your Comments"></textarea>
+            </li>
+                -->
+            <li>
+             <input type="submit" value="Sign Up" />
+            </li>
+            </ul>
+        </form>
+    {% endif %}
+   <!--
+   <form  action="." method="post" >
+      {% csrf_token %}
+      <table  bgcolor="#cdd0d6" frame="box">
+         <tr>
+             <td align="left" valign="center"  style="border-right: 5px solid #0f0f0f" width="350"><h4><u>Estimation Form</u></h4>
+                 <label><b>Name</b></label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;
+                 <input type="text" id="req_name" name="req_name" placeholder="Requirement Summary"><br><br>
+                <select id="complex1" name="complex1">
+                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="Simple">Simple</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Complex">Complex</option>
+               </select>
+            <br><br><label><b>Complexity 2</b></label>&nbsp;&nbsp;
+                <select id="complex2" name="complex2">
+                  <option value="" selected disabled hidden>Choose here</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+               </select>
+                <br><br>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&nbsp;
+                 <textarea id="comments_txt" name="comments_txt" placeholder="Your comments here (optional)" rows="5" cols="30"></textarea>
+                 <br><br>
+               <! -- <input type="submit" value="Calculate LOE" align="center"/> -- >
+                 <button name="btn" value="Reset" formmethod="get">Clear All</button>
+                 <button name="btn" value="Calculate LOE"> Calculate LOE</button>
+            </td>
+             <td rowspan="2" align="center"  style="border-right: 5px solid #0f0f0f">
+               <h4>Complexity Selection</h4>
+               <img src="/media/criteria.JPG" style="width:350px;height:200px;">
+            </td>
+             <td rowspan="2" align="center">
+               <h4>Formula Used</h4>
+               <img src="/media/math.JPG" style="width:350px;height:200px;">
+            </td>
+
+         </tr>
+      </table>
+      {% if data == '-1' %}
+      {% else %}
+       <p>
+           <table frame="border">
+                <tr>
+                    <td colspan="6" align="center" style="border-bottom: 2px dotted"><h3>Estimation Sheet</h3></td>
+                </tr>
+               <tr bgcolor="#ccd4e2">
+                   <td>
+                       # Requirement
+                   </td>
+                   <td>
+                       Complexity Level 1
+                   </td>
+                   <td>
+                       Complexity Level 2
+                   </td>
+                   <td>
+                       Technical LOE (in MDs)
+                   </td>
+                   <td>
+                       Technical LOE (With Unit Test)
+                   </td>
+                   <td>
+                       Comments
+                   </td>
+               </tr>
+            {% for item in rows %}
+                <tr>
+                    {% if item.2 == 'Total' %}
+                    {% for model in item %}
+                      <td align="left" style="border-top: 2px solid #0f0f0f" > <b>  {{model}}</b> </td>
+                    {% endfor %}
+                    {% else %}
+                    {% for model in item %}
+                      <td align="left" style="width:200px">   {{model}} </td>
+                    {% endfor %}
+                    {% endif %}
+                </tr>
+             {% endfor %}
+            </table>
+            <a href="/media/Estimation_List.xlsx" download>Click here to Download</a>
+       </p>
+    </form>
+    {% endif %}
+   {% endblock %}
+   -->
+   </body>
+    <footer>&copy; Netcracker Corporation</footer>
+</html>

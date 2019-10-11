@@ -76,14 +76,40 @@ WSGI_APPLICATION = 'Estimation_NC.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+'''
+# ElephantSQL central repository
+# Need paid account for ElephantSQL then only connections are possible. Else, not able to connect.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'xpvtgkzo',
+        'PASSWORD': 'WE0l1zoeKU4y-MZroIo597UYSJMvBECF',
+        'HOST': 'john.db.elephantsql.com',
+        'PORT': '5432',
+    }
+}
+'''
 
+# localhost db
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Estimation_Schema',
+        'USER': 'NC_DB_USER',
+        'PASSWORD': '12345678',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

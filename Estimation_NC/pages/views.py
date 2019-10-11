@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from EstimationEngine.EstimateMatrix import Estimate_Engine
+from EstimationEngine.CrudeOperation import Users as usr
 
 rows = []
 i=0
@@ -7,6 +8,66 @@ i=0
 
 def Home_Page(request):
     return render(request, "home.html", {})
+
+def Logout_Page(request):
+    request.session.flush()
+    return render(request,"logout.html",{})
+
+def Login_Page(request):
+    username = 'none'
+    password = ''
+    if request.method == 'POST':
+        if request.session.has_key('username'):
+            username = request.session['username']
+            context = {'username': username}
+            return render(request, "Home.html", context)
+        else:
+            username = request.POST.get('u_name')
+            password = request.POST.get('password')
+            request.session['username'] = username
+            print(password)
+            print(username)
+            #Condition to check if username and password is matching
+            if True:
+                context = {'username': username}
+                return render(request, "Home.html", context)
+            else:
+                context = {'username':'none'}
+                return render(request, "login.html", {})
+    else:
+        if request.session.has_key('username'):
+            username = request.session['username']
+            context= {'username':username}
+            return render(request, "Home.html", context)
+        else:
+            return render(request, "login.html", {})
+
+def Register_Page(request):
+    context={'success':'0','username':'none','u_email':'none'}
+    if request.method == 'POST':
+        u_name = request.POST.get("u_name")
+        password = request.POST.get("password")
+        re_pass = request.POST.get("re_pass")
+        u_email = request.POST.get("u_email")
+        password_mismatch = "Password doesn't match"
+        user_already_exists = "Username already exists"
+        print(u_name,password,u_email)
+        #condition to verify the password and re_pass field
+        result = usr.registerUser(u_name,password,re_pass,u_email)
+        if result =='success':
+            print('coming here 1')
+            # call method to store the data in table.
+            context= {'success':'1', 'username':u_name, 'err_msg':'0'}
+            print(context)
+        else:
+            if str(result).__contains__('Already'):
+                context = {'success': '3', 'username': u_name, 'err_msg': user_already_exists, 'u_email': u_email}
+            else:
+                if str(result).__contains__('Re-enter'):
+                    context = {'success': '2', 'username': u_name, 'err_msg': password_mismatch, 'u_email': u_email}
+                else:
+                    context = {'success':'0','username':'none','err_msg':'-1'}
+    return render(request, "register.html", context)
 
 def Index_tl_page(request):
     if request.method == 'POST':
@@ -29,6 +90,8 @@ def Index_tl_page(request):
                 total_loe += (float(num_tab) * 2)
             rows.append([num_tab,comp, num_trans, num_val, sum_loe, total_loe, comments])
             data = '1'
+            tot1, tot2 = Estimate_Engine.total_estimate_ll(rows)
+            rows.append(['', '', '', 'Total', tot1, tot2, ''])
         elif not comp:
             if not rows:
                 data = '-1'
@@ -38,8 +101,8 @@ def Index_tl_page(request):
                 tot1, tot2 = Estimate_Engine.total_estimate_ll(rows)
                 rows.append(['', '', '', 'Total', tot1, tot2, ''])
         # print(comments)
-        context = {'data': data, 'rows': rows}
-        print(rows)
+
+        print(rows)context = {'data': data, 'rows': rows}
     elif request.method=='GET':
         context = {'data': '-1'}
         rows = []
@@ -74,6 +137,8 @@ def Index_d_page(request):
             else:
                 rows.append([req, complex1, complex2, tech_loe, final_tech_loe, comments])
             data = 1
+            tot1, tot2 = Estimate_Engine.total_estimate(rows)
+            rows.append(['', '', 'Total', tot1, tot2, ''])
         elif (not complex1 or not complex2):
             if not rows :
                 data = '-1'
