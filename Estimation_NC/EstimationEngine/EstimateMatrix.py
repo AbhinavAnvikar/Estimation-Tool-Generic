@@ -90,7 +90,8 @@ class Estimate_Engine:
         # csv_list.append(rows)
         #str = str(datetime.datetime.now().time())
         #excel_name = "C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimate_Sheet_" + str
-        df = pd.DataFrame(data=csv_list)        writer = pd.ExcelWriter("C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation_List.xlsx")
+        df = pd.DataFrame(data=csv_list)
+        writer = pd.ExcelWriter("C:\\Users\\aban0617\\PycharmProjects\\Estimation_Tool\\venv\\Estimation_NC\\media\\Estimation_List.xlsx")
 
         df.to_excel(writer, header=False, index=False, sheet_name="Estimation_Sheet")
         writer.save()

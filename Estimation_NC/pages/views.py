@@ -101,8 +101,7 @@ def Index_tl_page(request):
                 tot1, tot2 = Estimate_Engine.total_estimate_ll(rows)
                 rows.append(['', '', '', 'Total', tot1, tot2, ''])
         # print(comments)
-
-        print(rows)context = {'data': data, 'rows': rows}
+        context = {'data': data, 'rows': rows}
     elif request.method=='GET':
         context = {'data': '-1'}
         rows = []
