@@ -24,23 +24,25 @@ def Login_Page(request):
         else:
             username = request.POST.get('u_name')
             password = request.POST.get('password')
-            request.session['username'] = username
             print(password)
             print(username)
+            err_text = usr.checkLogin(username,password)
             #Condition to check if username and password is matching
-            if True:
+            if err_text == 'success':
+                request.session['username'] = username
                 context = {'username': username}
                 return render(request, "Home.html", context)
             else:
-                context = {'username':'none'}
-                return render(request, "login.html", {})
+                context = {'username':'none','err_text':err_text}
+                return render(request, "login.html", context)
     else:
         if request.session.has_key('username'):
             username = request.session['username']
             context= {'username':username}
             return render(request, "Home.html", context)
         else:
-            return render(request, "login.html", {})
+            context = {'username': 'none', 'err_text': 'none' }
+            return render(request, "login.html", context)
 
 def Register_Page(request):
     context={'success':'0','username':'none','u_email':'none'}
@@ -53,20 +55,27 @@ def Register_Page(request):
         user_already_exists = "Username already exists"
         print(u_name,password,u_email)
         #condition to verify the password and re_pass field
-        result = usr.registerUser(u_name,password,re_pass,u_email)
-        if result =='success':
-            print('coming here 1')
-            # call method to store the data in table.
-            context= {'success':'1', 'username':u_name, 'err_msg':'0'}
-            print(context)
-        else:
-            if str(result).__contains__('Already'):
-                context = {'success': '3', 'username': u_name, 'err_msg': user_already_exists, 'u_email': u_email}
+        res,success = usr.passwordValidation(password)
+        print(res)
+        if success:
+            result = usr.registerUser(u_name,password,re_pass,u_email)
+            if result =='success':
+                print('coming here 1')
+                # call method to store the data in table.
+                context= {'success':'1', 'username':u_name, 'err_msg':'0'}
+                print(context)
             else:
-                if str(result).__contains__('Re-enter'):
-                    context = {'success': '2', 'username': u_name, 'err_msg': password_mismatch, 'u_email': u_email}
+                if str(result).__contains__('Already'):
+                    context = {'success': '3', 'username': u_name, 'err_msg': user_already_exists, 'u_email': u_email}
                 else:
-                    context = {'success':'0','username':'none','err_msg':'-1'}
+                    if str(result).__contains__('Re-enter'):
+                        context = {'success': '2', 'username': u_name, 'err_msg': password_mismatch, 'u_email': u_email}
+                    else:
+                        context = {'success':'0','username':'none','err_msg':'-1'}
+        else:
+            print("Coming here point 4")
+            context ={'success':'4','username':u_name,'u_email': u_email,'result':res }
+            print(context)
     return render(request, "register.html", context)
 
 def Index_tl_page(request):

@@ -135,6 +135,9 @@
             <li>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Login Now" formaction="/"  />&nbsp;&nbsp;
             </li>
+                {% if not err_text == 'none' %}
+                   <font color="red" size="2">* {{err_text}}</font>
+                {% endif %}
             <li>
                 <h5>Not a member yet, please <a href="/register">Sign Up </a></h5>
             </li>

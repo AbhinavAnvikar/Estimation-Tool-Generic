@@ -116,9 +116,10 @@
                 </li>
                 <li>
                     <input type="password" class="field-style field-full align-center" id="password" name="password" placeholder="Enter your Password" style="width: 50%; padding: 5px;"><br>
+
                 </li>
                 <li>
-                    <input type="password" class="field-style field-full align-center" id="re_pass" name="re_pass" placeholder="Re-enter your Password" style="width: 50%; padding: 5px;"><br>
+                    <input type="password" class="field-style field-full align-center" id="re_pass" name="re_pass" placeholder="Confirm your Password" style="width: 50%; padding: 5px;"><br>
                     {% if success == '2' %}
                     <br> <font color="red" size="2">* {{err_msg}}</font>
                 {% endif %}
@@ -156,7 +157,37 @@
             <li>
              <input type="submit" value="Sign Up" />
             </li>
-            </ul>
+                </ul>
+                {% if success == '4' %}
+                 <b><font size="2">Your Password needs to contain:&nbsp;&nbsp;&nbsp;&nbsp; </font></b><br><br>
+                {% for res in result %}
+                    {% if res.0 == 'count' %}
+                        {% if res.1 == 1 %}
+                            <font size="2" color="green"> &#10003;
+                        {% else %}
+                            <font size="2" color="red"> &#10008;
+                        {% endif %}
+                                 8 to 16 characters <br> </font>
+                    {% endif %}
+                    {% if res.0 == 'upper' %}
+                        {% if res.1 == 1 %}
+                            <font size="2" color="green">&#10003;
+                        {% else %}
+                            <font size="2" color="red">&#10008;
+                        {% endif %}
+                                Atleast one Uppercase &nbsp;&nbsp;&nbsp;&nbsp; <br></font>
+                    {% endif %}
+                    {% if res.0 == 'number' %}
+                        {% if res.1 == 1 %}
+                                <font size="2" color="green">&#10003;
+                        {% else %}
+                            <font size="2" color="red">&#10008;
+                        {% endif %}
+                                 Atleast one number  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></font>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+
         </form>
     {% endif %}
    <!--

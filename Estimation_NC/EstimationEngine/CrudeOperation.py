@@ -44,9 +44,32 @@ class Users:
     @staticmethod
     def checkLogin(u_name,password):
         #Method to verify the login credentials in order to login
-        pass
+        conn = psycopg2.connect(conn_string)
+        cursor = conn.cursor()
+        cursor.execute("select * from check_login_credential(%s,%s)", (u_name, password))
+        res = cursor.fetchone()
+        err_text = res[0]
+        success = res[1]
+        print(err_text)
+        return err_text
+
+    @staticmethod
+    def passwordValidation(password):
+        # method to verify the input password is as per the required format
+        conn = psycopg2.connect(conn_string)
+        success = True
+        cursor = conn.cursor()
+        cursor.execute("select * from password_validation('{0}')".format(password))
+        res = cursor.fetchall()
+        for i in range(3):
+            if res[i][1] == 0:
+                success = False
+        conn.commit()
+        conn.close()
+        #print(res)
+        return res, success
 
 if __name__=="__main__":
-    print(Users.registerUser('Anvikar','123456','123456','@gm.com'));
+    print(Users.passwordValidation('Abhinav1990'));
     #conn = psycopg2.connect(conn_string)
     #print(Users.checkUsernameExists('Anvikar',conn))
